@@ -83,3 +83,6 @@ schema.yml
 
 _env/env.json
 static/
+
+config.json
+reset_db.sh

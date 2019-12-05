@@ -3,10 +3,22 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-[dev-packages]
-
 [packages]
-django-rest-framework = "<4.0"
+django = ">=2.2,<2.3"
+django-cors-headers = "*"
+django-grappelli = "*"
+djangorestframework = ">=3.9,<4.0"
+drf-yasg = "*"
+django-background-tasks = "*"
+
+# We really don't want to mess up with broken web3 versions, so we'll simply freeze it
+web3 = ">=5.2,<6.0"
+
+# required to connect to postgres database
+"psycopg2-binary" = "*"
+
+[dev-packages]
+ipython = "*"
 
 
 [requires]
