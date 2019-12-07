@@ -25,6 +25,7 @@ PRIVATE_KEY_PASSWORD = ENV['private_key_password']
 
 NETWORK_ID = ENV['network_id']
 HOUSTECA_ABI_FILE_PATH = ENV['housteca_abi_file_path']
+LOAN_ABI_FILE_PATH = ENV['loan_abi_file_path']
 
 # task-related settings
 MAX_RUN_TIME = 60 * 60 * 3  # 3 hours
@@ -59,6 +60,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'users',
     'documents',
+    'loans',
 ]
 
 AUTH_USER_MODEL = 'users.User'

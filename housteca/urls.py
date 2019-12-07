@@ -13,6 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import sys
+
+from background_task.models import Task
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path, re_path
@@ -21,6 +24,9 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
 # Remove top-right corner link in django admin
+from common.utils import db_table_exists
+from loans.tasks import start_loan_update_task
+
 admin.site.site_url = '/swagger'
 
 
@@ -51,3 +57,9 @@ urlpatterns = [
         ])),
     ])),
 ]
+
+
+# start tasks
+if db_table_exists(Task.objects.model._meta.db_table) and 'process_tasks' in sys.argv:
+    Task.objects.all().delete()
+    start_loan_update_task(repeat=Task.HOURLY, repeat_until=None, remove_existing_tasks=True)
