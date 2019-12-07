@@ -9,6 +9,8 @@ class UserAPITest(BaseTestAPI):
         data = {
             'address': self.user.address,
             'email': 'test@test.com',
+            'first_name': 'John',
+            'last_name': 'Doe'
         }
         authorization = self.credentials()
         User.objects.all().delete()

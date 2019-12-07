@@ -133,6 +133,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STORAGE_PATH = ENV['storage_path']
+
 # Default authentication is "Basic base64(user:password)"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
