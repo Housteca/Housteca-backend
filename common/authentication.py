@@ -6,7 +6,6 @@ from typing import Tuple, Optional, Any
 from django.utils import timezone
 from django.utils.timezone import utc
 from eth_account.messages import encode_defunct
-from hexbytes import HexBytes
 from rest_framework import HTTP_HEADER_ENCODING
 from rest_framework.authentication import get_authorization_header, BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
