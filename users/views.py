@@ -1,12 +1,13 @@
 import logging
 
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.serializers import Serializer
 
 from common.authentication import extract_authorization_components, extract_address_from_authorization
 from common.exceptions import APIException
+from users.models import User
 from users.serializers import UserSerializer
 
 
@@ -28,3 +29,9 @@ class UserCreateAPI(CreateAPIView):
         if serializer.validated_data['address'] != address:
             raise ValidationError('Addresses do not match')
         serializer.save()
+
+
+class UserRetrieveAPI(RetrieveAPIView):
+    lookup_field = 'address'
+    serializer_class = UserSerializer
+    queryset = User.objects.all()

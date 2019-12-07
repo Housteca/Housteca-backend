@@ -19,3 +19,9 @@ class UserAPITest(BaseTestAPI):
         user = User.objects.get(address=response.data['address'])
         self.assertEqual(user.address, response.data['address'])
         self.assertEqual(user.email, response.data['email'])
+
+    def test_retrieve_user_should_work(self) -> None:
+        response = self.client.get(f'/api/v1/users/{self.user.address}/', **self.credentials())
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
+        self.assertEqual(self.user.address, response.data['address'])
+        self.assertEqual(self.user.email, response.data['email'])
