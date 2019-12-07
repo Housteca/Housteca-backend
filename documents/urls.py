@@ -1,6 +1,6 @@
 from django.urls import re_path
 
-from documents.views import ListCreateDocumentAPI, RetrieveDocumentAPI
+from documents.views import ListCreateDocumentAPI, RetrieveDocumentAPI, UploadImageToIPFSAPI
 
 urlpatterns = [
     re_path(r'^$', ListCreateDocumentAPI.as_view(), name='list_create_document_api'),

@@ -10,6 +10,7 @@ django-grappelli = "*"
 djangorestframework = ">=3.9,<4.0"
 drf-yasg = "*"
 django-background-tasks = "*"
+ipfshttpclient = "*"
 
 # We really don't want to mess up with broken web3 versions, so we'll simply freeze it
 web3 = ">=5.2,<6.0"

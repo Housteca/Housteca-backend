@@ -38,6 +38,7 @@ SECRET_KEY = ENV['secret_key']
 DEBUG = ENV['debug']
 
 os.environ['WEB3_PROVIDER_URI'] = ENV['web3_provider_uri']
+IPFS_URI = ENV['ipfs_uri']
 
 ALLOWED_HOSTS = ['*']
 

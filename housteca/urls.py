@@ -25,6 +25,7 @@ from rest_framework import permissions
 
 # Remove top-right corner link in django admin
 from common.utils import db_table_exists
+from documents.views import UploadImageToIPFSAPI
 from loans.tasks import start_loan_update_task
 
 admin.site.site_url = '/swagger'
@@ -52,6 +53,7 @@ urlpatterns = [
     re_path(r'^redoc/?$', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
     path(r'api/', include([
         path('v1/', include([
+            re_path(r'^images/?$', UploadImageToIPFSAPI.as_view(), name='upload_ipfs_api'),
             path('documents/', include('documents.urls')),
             path('users/', include('users.urls')),
         ])),
