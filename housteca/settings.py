@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with open(os.path.join(BASE_DIR, 'config.json')) as file:
     ENV = json.load(file)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
 PRIVATE_KEY_PATH = ENV['private_key_path']
 PRIVATE_KEY_PASSWORD = ENV['private_key_password']
+
+NETWORK_ID = ENV['network_id']
+HOUSTECA_ABI_FILE_PATH = ENV['housteca_abi_file_path']
 
 # task-related settings
 MAX_RUN_TIME = 60 * 60 * 3  # 3 hours
@@ -57,8 +57,11 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-
+    'users',
+    'documents',
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 INSTALLED_APPS = THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -133,8 +136,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default authentication is "Basic base64(user:password)"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # TODO create a custom authentication class
+        'common.authentication.EthereumAuthentication'
     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 SWAGGER_SETTINGS = {
