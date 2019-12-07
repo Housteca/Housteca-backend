@@ -12,3 +12,6 @@ class User(AbstractUser):
         validators=[RegexValidator(regex=ETHEREUM_ADDRESS_REGEX,
                                    message='Invalid Ethereum address',
                                    code='nomatch')])
+
+    def __str__(self) -> str:
+        return self.address

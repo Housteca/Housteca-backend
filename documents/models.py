@@ -17,3 +17,6 @@ class Document(models.Model):
     def contents(self) -> str:
         contents = get_document(self.pk)
         return base64.b64encode(contents).decode()
+
+    def __str__(self) -> str:
+        return self.pk
