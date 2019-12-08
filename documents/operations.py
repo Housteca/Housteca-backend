@@ -4,6 +4,8 @@ import ipfshttpclient
 from django.conf import settings
 
 from common.ethereum import w3
+from documents.models import Document
+from users.models import User
 
 MAX_SIZE = 10485760
 
@@ -21,7 +23,18 @@ def get_document(document_hash: str) -> bytes:
         return file.read()
 
 
-def add_document(contents: bytes) -> str:
+def add_document(file, user: User) -> Document:
+    document_hash = store_document(file.read())
+    return Document.objects.create(
+        hash=document_hash,
+        name=file.name,
+        content_type=file.content_type,
+        size=file.size,
+        user=user,
+    )
+
+
+def store_document(contents: bytes) -> str:
     _validate_image_size(len(contents))
     document_hash = w3.keccak(contents).hex()
     path = os.path.join(settings.STORAGE_PATH, document_hash)

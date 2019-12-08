@@ -21,17 +21,8 @@ class ListCreateDocumentAPI(ListCreateAPIView):
         file = self.request.FILES['file']
         if not file:
             raise APIException('No file found')
-        contents = file.read()
-        document_hash = add_document(contents)
-        data = {
-            'hash': document_hash,
-            'name': file.name,
-            'content_type': file.content_type,
-            'size': file.size,
-        }
-        serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user)
+        document = add_document(file, user=request.user)
+        serializer = self.get_serializer(instance=document)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

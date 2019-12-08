@@ -12,7 +12,7 @@ from documents.operations import get_document
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ('hash', 'user' ,'name', 'size', 'content_type', 'created_at', 'download')
+    list_display = ('hash', 'user', 'name', 'size', 'content_type', 'created_at', 'download')
 
     def download(self, document: Document) -> str:
         return format_html(f'<a href="{document.pk}/download/">Download</a>')

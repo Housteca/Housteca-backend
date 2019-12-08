@@ -2,9 +2,6 @@ import base64
 
 from django.db import models
 
-from documents.operations import get_document
-
-
 class Document(models.Model):
     hash = models.CharField(max_length=66, primary_key=True)
     name = models.CharField(max_length=128, null=True, blank=True)
@@ -15,6 +12,8 @@ class Document(models.Model):
 
     @property
     def contents(self) -> str:
+        from documents.operations import get_document
+
         contents = get_document(self.pk)
         return base64.b64encode(contents).decode()
 
