@@ -53,6 +53,6 @@ class DocumentCreateListAPITest(BaseTestAPI):
 class IPFSUploadTest(BaseTestAPI):
     def test_upload_to_ipfs_should_work(self) -> None:
         image = SimpleUploadedFile('image.png', SAMPLE_FILE, content_type="image/png")
-        response = self.client.post('/api/v1/images/', {'image': image}, **self.credentials())
+        response = self.client.post('/api/v1/images/', {'file': image}, **self.credentials())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.data)
         self.assertEqual(response.data['hash'], 'QmQ6me2j1NDDwppuCm1PGAm1GQdjeRjChxSGbio7Zh7pQP')

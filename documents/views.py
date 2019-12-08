@@ -46,11 +46,11 @@ class RetrieveDocumentAPI(RetrieveAPIView):
 
 class UploadImageToIPFSAPI(APIView):
     def post(self, request: Request, *args, **kwargs) -> Response:
-        image = request.FILES['image']
+        image = request.FILES['file']
         if not image:
             raise APIException('No image found')
         if image.content_type not in ('image/jpeg', 'image/png'):
-            raise APIException('Only JPEF and PNG formats are supported')
+            raise APIException('Only JPEG and PNG formats are supported')
         contents = image.read()
         document_hash = add_image_to_ipfs(contents)
         return Response({'hash': document_hash}, status=status.HTTP_201_CREATED)
