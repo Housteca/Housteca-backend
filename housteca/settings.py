@@ -39,6 +39,7 @@ DEBUG = ENV['debug']
 
 os.environ['WEB3_PROVIDER_URI'] = ENV['web3_provider_uri']
 IPFS_URI = ENV['ipfs_uri']
+ETHERSCAN_URI = ENV.get('etherscan_uri', 'https://etherscan.io')
 
 ALLOWED_HOSTS = ['*']
 

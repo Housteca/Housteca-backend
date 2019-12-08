@@ -1,4 +1,4 @@
-from typing import Iterable, Union
+from typing import Iterable, Union, Optional
 
 from compat import URLResolver
 from django import forms
@@ -31,10 +31,14 @@ class AdminForm(forms.ModelForm):
 class DocumentAdmin(admin.ModelAdmin):
     form = AdminForm
 
-    list_display = ('hash', 'user', 'name', 'size', 'content_type', 'created_at', 'download')
+    list_display = ('hash', 'user', 'name', 'size', 'content_type', 'created_at', 'download',)
+    search_fields = ('hash', 'name', 'user__address', 'user__first_name', 'user__last_name', 'user__email',)
 
     def download(self, document: Document) -> str:
         return format_html(f'<a href="{document.pk}/download/">Download</a>')
+
+    def has_change_permission(self, request: HttpRequest, obj: Optional[Document] = None):
+        return False
 
     download.short_description = 'Download'
     download.allow_tags = True
