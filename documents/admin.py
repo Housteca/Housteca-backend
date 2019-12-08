@@ -1,17 +1,36 @@
 from typing import Iterable, Union
 
 from compat import URLResolver
+from django import forms
 from django.contrib import admin
 from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern, path
 from django.utils.html import format_html
 
 from documents.models import Document
-from documents.operations import get_document
+from documents.operations import get_document, add_document
+
+
+class AdminForm(forms.ModelForm):
+    file = forms.FileField()
+
+    def save(self, commit: bool = True) -> Document:
+        file = self.cleaned_data['file']
+        user = self.cleaned_data['user']
+        return add_document(file, user)
+
+    def save_m2m(self) -> None:
+        pass
+
+    class Meta:
+        model = Document
+        fields = ['user', 'file']
 
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
+    form = AdminForm
+
     list_display = ('hash', 'user', 'name', 'size', 'content_type', 'created_at', 'download')
 
     def download(self, document: Document) -> str:

@@ -2,6 +2,7 @@ import os
 
 import ipfshttpclient
 from django.conf import settings
+from django.core.files.uploadedfile import UploadedFile
 
 from common.ethereum import w3
 from documents.models import Document
@@ -23,7 +24,7 @@ def get_document(document_hash: str) -> bytes:
         return file.read()
 
 
-def add_document(file, user: User) -> Document:
+def add_document(file: UploadedFile, user: User) -> Document:
     document_hash = store_document(file.read())
     return Document.objects.create(
         hash=document_hash,
