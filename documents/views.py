@@ -1,4 +1,5 @@
 from django.db.models import QuerySet
+from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.exceptions import APIException
 from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
@@ -7,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from documents.models import Document
-from documents.operations import add_document, add_image_to_ipfs
+from documents.operations import add_document, add_image_to_ipfs, get_document
 from documents.serializers import DocumentSerializer
 
 
@@ -31,6 +32,16 @@ class RetrieveDocumentAPI(RetrieveAPIView):
 
     def get_queryset(self) -> QuerySet:
         return Document.objects.filter(user=self.request.user)
+
+    def retrieve(self, request, *args, **kwargs) -> HttpResponse:
+        document = self.get_object()
+        content = get_document(document.hash)
+        response = Response(
+            data=content,
+            content_type=document.content_type,
+        )
+        response['Content-Disposition'] = f'attachment; filename={document.name}'
+        return response
 
 
 class UploadImageToIPFSAPI(APIView):

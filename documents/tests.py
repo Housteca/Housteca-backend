@@ -48,7 +48,9 @@ class DocumentCreateListAPITest(BaseTestAPI):
         document_hash = response.data['hash']
         response = self.client.get(f'/api/v1/documents/{document_hash}/', **self.credentials())
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
-        self.check_response(response.data)
+        self.assertEqual(response.data, self.file_contents)
+        self.assertEqual(response['Content-Disposition'], f'attachment; filename={self.file_name}')
+        self.assertEqual(response['Content-Type'], 'text/plain')
 
 
 class IPFSUploadTest(BaseTestAPI):
