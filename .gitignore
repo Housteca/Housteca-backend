@@ -87,3 +87,4 @@ static/
 config.json
 reset_db.sh
 storage/
+deploy.sh
