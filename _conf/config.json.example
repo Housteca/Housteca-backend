@@ -1,0 +1,19 @@
+{
+  "database": {
+    "name": "housteca",
+    "user": "housteca",
+    "password": "housteca",
+    "host": "127.0.0.1"
+  },
+  "web3_provider_uri": "http://127.0.0.1:7545",
+  "ipfs_uri": "/ip4/127.0.0.1/tcp/5001/http",
+  "etherscan_uri": "https://ropsten.etherscan.io",
+  "private_key_path": "/path/to/private/key",
+  "private_key_password": "",
+  "housteca_abi_file_path": "/path/to/Housteca.json",
+  "loan_abi_file_path": "/path/to/Loan.json",
+  "network_id": "5777",
+  "debug": true,
+  "secret_key": "&1a!35od28_!$ikii0ma_cxre*@b-sd4sztf+^qjg52l2srr&",
+  "storage_path": "/path/to/storage"
+}

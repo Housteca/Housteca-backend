@@ -1,0 +1,9 @@
+[Unit]
+Description=Housteca
+
+[Service]
+Type=simple
+User=ubuntu
+Restart=always
+WorkingDirectory=/usr/src/app/housteca
+ExecStart=/usr/local/bin/pipenv run -- ./manage.py process_tasks
