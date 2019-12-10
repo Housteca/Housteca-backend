@@ -27,6 +27,7 @@ from rest_framework import permissions
 from common.utils import db_table_exists
 from documents.views import UploadImageToIPFSAPI
 from loans.tasks import start_loan_update_task
+from properties.tasks import check_new_investments_task
 
 admin.site.site_url = '/swagger'
 
@@ -56,6 +57,7 @@ urlpatterns = [
             re_path(r'^images/?$', UploadImageToIPFSAPI.as_view(), name='upload_ipfs_api'),
             path('documents/', include('documents.urls')),
             path('users/', include('users.urls')),
+            path('properties/', include('properties.urls')),
         ])),
     ])),
 ]
@@ -65,3 +67,4 @@ urlpatterns = [
 if db_table_exists(Task.objects.model._meta.db_table) and 'process_tasks' in sys.argv:
     Task.objects.all().delete()
     start_loan_update_task(repeat=Task.HOURLY, repeat_until=None, remove_existing_tasks=True)
+    check_new_investments_task(repeat=10, repeat_until=None, remove_existing_tasks=True)

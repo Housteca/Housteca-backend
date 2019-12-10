@@ -6,5 +6,4 @@ from documents.models import Document
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fields = ['hash', 'size', 'created_at', 'content_type', 'name', 'user']
-        read_only_fields = ['user']
+        fields = ['hash', 'size', 'created_at', 'content_type', 'name']

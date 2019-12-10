@@ -1,5 +1,7 @@
 from typing import Iterable, Union, Optional
 
+from django.conf import settings
+
 from compat import URLResolver
 from django import forms
 from django.contrib import admin
@@ -11,7 +13,7 @@ from documents.models import Document
 from documents.operations import get_document, add_document
 
 
-class AdminForm(forms.ModelForm):
+class DocumentAdminForm(forms.ModelForm):
     file = forms.FileField()
 
     def save(self, commit: bool = True) -> Document:
@@ -24,12 +26,12 @@ class AdminForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ['user', 'file']
+        fields = ['user', 'property', 'file']
 
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
-    form = AdminForm
+    form = DocumentAdminForm
 
     list_display = ('hash', 'user', 'name', 'size', 'content_type', 'created_at', 'download',)
     search_fields = ('hash', 'name', 'user__address', 'user__first_name', 'user__last_name', 'user__email',)
@@ -61,3 +63,7 @@ class DocumentAdmin(admin.ModelAdmin):
                  name='documents_document_download'),
         ]
         return extra_urls + urls
+
+
+class DocumentInline(admin.TabularInline):
+    model = Document

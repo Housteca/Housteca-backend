@@ -24,7 +24,6 @@ class DocumentCreateListAPITest(BaseTestAPI):
         self.assertEqual(data['name'], self.file_name)
         self.assertEqual(data['content_type'], 'text/plain')
         self.assertEqual(data['hash'], w3.keccak(self.file_contents).hex())
-        self.assertEqual(data['user'], self.user.pk)
 
     def test_upload_document_should_work(self) -> None:
         response = self.upload_document()
