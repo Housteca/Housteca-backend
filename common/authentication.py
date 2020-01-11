@@ -25,7 +25,7 @@ def extract_authorization_components(request: Request) -> Tuple[Optional[str], O
         msg = 'Invalid housteca header. No credentials provided.'
         raise AuthenticationFailed(msg)
     elif len(auth) > 2:
-        msg = _('Invalid housteca header. Credentials string should not contain spaces.')
+        msg = 'Invalid housteca header. Credentials string should not contain spaces.'
         raise AuthenticationFailed(msg)
 
     try:
@@ -43,10 +43,10 @@ def extract_address_from_authorization(message: str, signature: str) -> str:
     except ValueError:
         raise AuthenticationFailed('Not a valid datetime')
     now = timezone.now()
-    if now - timedelta(seconds=3) < datetime_obj < now + timedelta(seconds=3):
+    if now - timedelta(minutes=30) < datetime_obj < now + timedelta(minutes=30):
         encoded_message = encode_defunct(text=message)
         return w3.eth.account.recover_message(encoded_message, signature=signature)
-    raise AuthenticationFailed('Only three-second intervals are allowed')
+    raise AuthenticationFailed('Only 30-minute intervals are allowed')
 
 
 class EthereumAuthentication(BaseAuthentication):
