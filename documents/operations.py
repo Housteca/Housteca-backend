@@ -26,13 +26,14 @@ def get_document(document_hash: str) -> bytes:
 
 def add_document(file: UploadedFile, user: User) -> Document:
     document_hash = store_document(file.read())
-    return Document.objects.create(
+    obj, _ = Document.objects.update_or_create(
         hash=document_hash,
         name=file.name,
         content_type=file.content_type,
         size=file.size,
         user=user,
     )
+    return obj
 
 
 def store_document(contents: bytes) -> str:
