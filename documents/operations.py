@@ -11,7 +11,7 @@ from users.models import User
 MAX_SIZE = 10485760
 
 
-def _validate_image_size(size: int) -> None:
+def _validate_size(size: int) -> None:
     if size > MAX_SIZE:
         raise ValueError('Maximum file size is 10MB')
 
@@ -37,7 +37,7 @@ def add_document(file: UploadedFile, user: User) -> Document:
 
 
 def store_document(contents: bytes) -> str:
-    _validate_image_size(len(contents))
+    _validate_size(len(contents))
     document_hash = w3.keccak(contents).hex()
     path = os.path.join(settings.STORAGE_PATH, document_hash)
     with open(path, 'wb') as file:
@@ -46,8 +46,6 @@ def store_document(contents: bytes) -> str:
 
 
 def add_image_to_ipfs(contents: bytes) -> str:
-    _validate_image_size(len(contents))
-    client = ipfshttpclient.connect(settings.IPFS_URI)
-    ipfs_hash = client.add_bytes(contents)
-    client.close()
-    return ipfs_hash
+    _validate_size(len(contents))
+    with ipfshttpclient.connect(settings.IPFS_URI) as client:
+        return client.add_bytes(contents)
